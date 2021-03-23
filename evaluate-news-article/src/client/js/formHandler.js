@@ -31,8 +31,8 @@ const handleSubmit = async () => {
      }
      else
      {
-        document.getElement
-        ById("text").innerHTML = "invalid input"
+        document.getElementById("text").innerHTML = "invalid input";
+        alert("not a url");
         return
      }
     
