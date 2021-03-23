@@ -1,15 +1,14 @@
-// TODO: import the url check function
+const functions = require('../js/ValidURL');
 
-describe('Test check url functionality', () => {
-    test('Testing the checkUrl function defined or not', () => {
-        // TODO: write your logic here
+describe('URL TESTING', () => {
+    test('not defined or defined', () => {
+        expect(functions.ValidURL("https://gist.github.com/franciskim/41a959f8e3989254ef5d")).toBeDefined();
     })
+    test('URL False test case', () => {
+        expect(functions.ValidURL("not defined url")).toBeFalsy();
 
-    test('Testing the checkUrl function return false for invalid url', () => {
-        // TODO: write your logic here
     })
-
-    test('Testing the checkUrl function return true for valid url', () => {
-        // TODO: write your logic here
+    test('URL True test case', () => {
+        expect(functions.ValidURL("https://gist.github.com/franciskim/41a959f8e3989254ef5d")).toBeTruthy();
     })
 })

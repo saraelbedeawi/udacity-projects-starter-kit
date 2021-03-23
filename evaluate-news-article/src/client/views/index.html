@@ -10,16 +10,17 @@
       <div class="container">
         <p>Enter a URL of an article / a blog to discover its sentiment.</p>
         <section>
-          <form id="form">
+          <div id="form" onsubmit = "return Client.handleSubmit()">
             <label for="article-url">URL</label>
             <input id="article-url" type="text" name="input" value="" placeholder="Enter Article URL here" />
             <button
               type="submit"
               class="btn-submit"
+              id="submit-id"
             >
               Submit
             </button>
-          </form>
+          </div>
         </section>
 
         <section>

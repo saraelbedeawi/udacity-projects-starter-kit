@@ -1,41 +1,57 @@
-// TODO: Configure the environment variables
-
 const mockAPIResponse = require('./mockAPI.js')
-
 const PORT = 8081
-
-// TODO add Configuration to be able to use env variables
-
+const axios = require("axios")
+const dotenv = require('dotenv');
+dotenv.config();
+console.log(`Your API key is ${process.env.API_KEY}`);
+const MEAN_CLOUD_API_KEY = process.env.API_KEY
 const BASE_API_URL = 'https://api.meaningcloud.com/sentiment-2.1'
 
-// TODO: Create an instance for the server
-// TODO: Configure cors to avoid cors-origin issue
-// TODO: Configure express to use body-parser as middle-ware.
-// TODO: Configure express static directory.
+var express = require('express')
+const app = express()
+
+const cors = require('cors');
+app.use(cors())
+var bodyParser  = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+  }));
+app.use(express.static('dist'))
 
 app.get('/', function (req, res) {
-    // res.sendFile('dist/index.html')
-    res.sendFile(path.resolve('src/client/views/index.html'))
+     res.sendFile('dist/index.html')
+   // res.sendFile(path.resolve('src/client/views/index.html'))
 })
-// INFO: a route that handling post request for new URL that coming from the frontend
+var bodyParser = require("body-parser");
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: false,
+  })
+);
+
 app.post('/add-url', async (req, res) => {
     try {
-        /* TODO:
-    1. GET the url from the request body
-    2. Build the URL it should be something like `${BASE_API_URL}?key=${MEAN_CLOUD_API_KEY}&url=${req.body.url}&lang=en`
-    3. Fetch Data from API
-    4. Send it to the client
-    5. REMOVE THIS TODO AFTER DOING IT 😎😎
-    server sends only specified data to the client with below codes
-     const sample = {
-       text: '',
-       score_tag : '',
-       agreement : '',
-       subjectivity : '',
-       confidence : '',
-       irony : ''
-     }
-  */
+   
+    const url = req.body.url;
+   
+    apiURL = BASE_API_URL;
+    apiKey = process.env.API_KEY;
+    const apiResponse = await axios.get(
+      `${apiURL}?key=${apiKey}&url=${url}&lang=en`
+    );
+
+    const { agreement, subjectivity, confidence, irony,score_tag } = apiResponse.data;
+    res.send({
+      agreement,
+      subjectivity,
+      confidence,
+      irony,
+      score_tag,
+
+    });
+ 
     } catch (error) {
         console.log(error.message)
     }
@@ -45,10 +61,9 @@ app.get('/test', function (req, res) {
     res.send(mockAPIResponse)
 })
 
-// designates what port the app will listen to for incoming requests
 app.listen(PORT, (error) => {
     if (error) throw new Error(error)
     console.log(`Server listening on port ${PORT}!`)
 })
 
-// TODO: export app to use it in the unit testing
+module.exports={app}

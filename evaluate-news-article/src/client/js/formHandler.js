@@ -1,3 +1,4 @@
+import {ValidURL} from './ValidURL'
 const post = async (url = '', data = {}) => {
     const response = await fetch(url, {
         method: 'POST',
@@ -16,15 +17,24 @@ const post = async (url = '', data = {}) => {
 }
 
 const handleSubmit = async () => {
-    /**
-     * TODO
-     *  - Get Value of the input for URL
-     *  - Check if it's URL or not
-     *      yes
-     *          send it to the backend
-     *      no
-     *          show user message it's not valid URL
-     */
-}
+     const url = document.getElementById('article-url').value
+     
+     if(ValidURL(url)) {
+       const data = await post("http://localhost:8081/add-url", {url})    
+        document.getElementById('agreement').innerHTML=data.agreement;
+        document.getElementById('subjectivity').innerHTML=data.subjectivity;
+        document.getElementById('confidence').innerHTML=data.confidence;
+        document.getElementById('irony').innerHTML=data.irony;
+        document.getElementById('score_tag').innerHTML=data.score_tag;
 
+        
+     }
+     else
+     {
+        document.getElement
+        ById("text").innerHTML = "invalid input"
+        return
+     }
+    
+}
 export default handleSubmit
