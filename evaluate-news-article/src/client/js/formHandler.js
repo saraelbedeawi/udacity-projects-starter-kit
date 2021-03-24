@@ -26,11 +26,10 @@ const handleSubmit = async () => {
         document.getElementById('confidence').innerHTML=data.confidence;
         document.getElementById('irony').innerHTML=data.irony;
         document.getElementById('score_tag').innerHTML=data.score_tag;
-
-        
      }
      else
      {
+       
         document.getElementById("text").innerHTML = "invalid input";
         alert("not a url");
         return
