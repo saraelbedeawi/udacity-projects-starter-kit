@@ -1,5 +1,4 @@
 import 'babel-polyfill'
-const request = require('supertest')
 const { app } = require('../index');
 
 const request = require('supertest')
